@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+    border: none;
+    outline: none;
+    font-family: 'Pretendard';
+    color: #fff;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-color: gray;
+}
+
+/* Í≥µÌÜµ ?§Ì???*/
+.content {
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+/* PC ?îÎ©¥ 
+   ?îÎ©¥ ?àÎπÑÍ∞Ä 769px ?¥ÏÉÅ?????ÅÏö©.*/
+@media screen and (min-width: 769px) {
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        /* PC??600pxÎ°??êÏ∞ç?òÍ≤å */
+        background: #0000007a;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(13px);
+        -webkit-backdrop-filter: blur(13px);
+        padding: 30px 35px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Î™®Î∞î???îÎ©¥ 
+   ?îÎ©¥ ?àÎπÑÍ∞Ä 768px ?¥Ìïò?????ÅÏö©.*/
+@media screen and (max-width: 768px) {
+    .content {
+        /* Î™®Î∞î?ºÏóê?úÎäî ?îÎ©¥ Ï§ëÏïô??Í≥†Ï†ï?òÎäî ?Ä???ÅÏ†à???¨Î∞±??Ï§?*/
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -60%);
+        margin: 50px auto;
+        /* ?ÅÌïò ?¨Î∞± 50px, Ï¢åÏö∞ ?êÎèô Ï§ëÏïô */
+        width: 90%;
+        /* ?îÎ©¥??90% Ï∞®Ï? */
+        max-width: 400px;
+        /* ?ÑÎ¨¥Î¶?Ïª§Ï†∏??400px ?úÌïú */
+        padding: 40px 20px;
+        background: #0000007a;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+}
+
+.content h2 {
+    font-style: 38px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.content .input-box {
+    position: relative;
+    width: 100%;
+    height: 55px;
+    margin: 35px 0;
+}
+
+.content .input-box input {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 20px 45px 20px 20px;
+    font-size: 1rem;
+}
+
+input::placeholder {
+    color: #fff;
+    font-size: 1rem;
+}
+
+.input-box i {
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+    font-size: 1.125rem;
+    color: #fff;
+}
+
+span {
+    margin-left: 10px;
+    margin-bottom: 3px;
+    display: block;
+}
+
+.content .remember {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -16px 0 16px;
+}
+
+.remember label input {
+    accent-color: #fff;
+    margin-right: 4px;
+}
+
+.remember a {
+    color: #fff;
+}
+
+.btnn {
+    display: inline-block;
+    background: #fff;
+    color: #0a2862;
+    width: 100%;
+    height: 45px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    margin: 16px 0;
+}
+
+.button {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.button a {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+
+.button a i {
+    font-size: 1.25rem;
+    margin-right: 8px;
+}
+
+.button a:hover {
+    opacity: 0.8;
+}
+
+
+input[type="checkbox"] {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+input::-webkit-credentials-auto-fill-button,
+input::-webkit-clear-button,
+input::-webkit-inner-spin-button,
+input::-webkit-contacts-auto-fill-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.gender-box {
+    display: flex;
+    gap: 15px;
+    margin: 5px 0 20px;
+}
+
+.gender-btn {
+    flex: 1;
+    height: 45px;
+    border-radius: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background: transparent;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.gender-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.gender-btn.active {
+    background: #fff;
+    color: #0a2862;
+    font-weight: 600;
+}

@@ -1,0 +1,400 @@
+﻿@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+body {
+	background: #000;
+	color: #fff;
+	font-family: 'Pretendard';
+	overflow-x: hidden;
+}
+
+/* 검색 영역 */
+.search-section {
+	padding-top: 70px;
+	position: relative;
+	min-height: 60vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	overflow: hidden;
+}
+
+.aurora-mask {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#auroraCanvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.search-section h1 {
+	font-size: 1.875rem;
+	letter-spacing: 1.6px;
+	margin-bottom: 3px;
+}
+
+.search-section p {
+	font-size: 1.25rem;
+	letter-spacing: 0.5px;
+}
+
+.search-box {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	margin-top: 24px;
+}
+
+.search-box input {
+	width: 600px;
+	padding: 14px;
+	border-radius: 8px 0 0 8px;
+	border: none;
+	font-size: 1rem;
+}
+
+.search-box button {
+	padding: 14px 22px;
+	border-radius: 0 8px 8px 0;
+	border: none;
+	background: var(--main-blue);
+	color: white;
+	cursor: pointer;
+}
+
+/* 영화 섹션 */
+.movie-section {
+	padding: 3vw 10vw;
+	background: var(--main-background);
+	text-align: center;
+}
+
+.section-title {
+	font-weight: 600;
+	font-size: 2.12vw;
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+/* 가로 영화 리스트 */
+.movie_slider {
+	position: relative;
+}
+
+.movie-list {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+	scroll-behavior: smooth;
+	overflow: hidden;
+
+	gap: 0.8%;
+}
+
+/* 영화 카드 */
+.movie-card {
+	width: 13%;
+	position: relative;
+	border-radius: 7%;
+	overflow: hidden;
+	cursor: pointer;
+	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+	flex: 0 0 calc((100% - 6 * 1.2%) / 7);
+    aspect-ratio: 2 / 3;
+}
+
+.movie-card img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+/* 호버 효과 */
+.movie-card:hover {
+	transform: scale(1.03);
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.movie-card:hover img {
+	transform: scale(1.06);
+	filter: blur(1.5px);
+}
+
+/* 오버레이 */
+.movie-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: 1rem;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+
+	text-align: left;
+}
+
+.movie-card:hover .movie-overlay {
+	opacity: 1;
+}
+
+.text-box {
+	display: flex;
+	justify-content: space-between;
+}
+
+
+.movie-overlay .rating {
+	color: gold;
+	font-size: 0.75rem;
+	margin-bottom: 0.25rem;
+}
+
+.movie-overlay h4 {
+	margin: 0 0 0.25rem 0;
+	font-weight: bold;
+	font-size: 0.875rem;
+}
+
+.movie-overlay p {
+	font-size: 0.75rem;
+	color: #ccc;
+	margin: 0;
+}
+
+.next.right {
+	right: -60px;
+}
+
+.next.left {
+	left: -60px;
+}
+
+.next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+
+	color: #fff;
+	font-size: 1.5625rem;
+	text-align: center;
+	line-height: 50px;
+
+	cursor: pointer;
+}
+
+.movie-list::-webkit-scrollbar {
+	display: none;
+}
+
+.movie-list {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.rank-section{
+	padding: 3.5vw 4vw;
+}
+.top7-list {
+	overflow: hidden;
+	justify-content: space-between;
+
+}
+
+/* 랭크 카드 */
+.rank-card {
+    position: relative;
+    overflow: visible !important; /* 순위 숫자를 카드 밖으로 노출 */
+    transform: none !important;
+	
+}
+
+.rank-card img {
+    clip-path: inset(0);
+    transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+/* 포스터만 클리핑 */
+.rank-card .poster-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 7%;
+    overflow: hidden; /* 이미지 호버가 내부에서만 보이도록 */
+}
+
+/* 큰 순위 숫자 */
+.rank-card .rank-num {
+    position: absolute;
+    left: -20px;
+    bottom: -40px;
+
+    font-size: 12vw;
+    font-weight: 900;
+    line-height: 1;
+
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+
+    z-index: 99999;
+    pointer-events: none;
+
+    transform: none !important;
+    filter: none !important;
+}
+
+/* 호버 시 순위 숫자 안정화 */
+.rank-card:hover .rank-num {
+    opacity: 0.15;
+}
+.clip{
+	overflow: hidden;
+}
+
+.rank-card:hover img {
+	transform: scale(1.06);
+	filter: blur(1.5px);
+}
+
+.rank-card:hover .poster-wrap {
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.top7-list {
+	overflow: visible !important;
+}
+
+
+.movie-card:hover .rank-num {
+	transform: none;
+	filter: none;
+}
+
+.rank-card .movie-overlay {
+	z-index: 3;
+}
+
+.site-footer {
+	background: var(--main-background);
+	padding: 90px 10vw 30px;
+}
+
+.footer-inner {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 60px;
+}
+
+.footer-brand {
+	font-size: 2.125rem;
+	font-weight: 900;
+	letter-spacing: 1px;
+	margin-top: 55px;
+	white-space: nowrap;
+}
+
+.footer-cols {
+	display: flex;
+	gap: 90px;
+}
+
+.footer-col h4 {
+	font-size: 1rem;
+	margin-bottom: 12px;
+	font-weight: 800;
+}
+
+.footer-col ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.footer-col li {
+	font-size: 0.75rem;
+	font-weight: 200;
+	color: rgba(255, 255, 255, 0.7);
+	margin-bottom: 6px;
+}
+
+.footer-col li.Inquiry {
+	color: #f5f5f5;
+	font-weight: 200;
+}
+
+.footer-bottom {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.footer-line {
+	height: 1px;
+	background: rgba(255, 255, 255, 0.15);
+	margin-bottom: 18px;
+}
+
+.footer-bottom p {
+	font-size: 0.75rem;
+	color: rgba(255, 255, 255, 0.6);
+	margin: 6px 0;
+}
+
+.footer-small {
+	font-size: 0.6875rem;
+	color: rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 768px) {
+	.footer-inner{
+		flex-direction: column;
+	}
+	.footer-cols {
+    	flex-direction: column;
+		gap: 15px;
+	}
+	
+	.search-box input {
+		width: 75vw;
+	}
+
+	/* 모바일에서 화살표 오프셋으로 생기는 가로 스크롤 방지 */
+	.next {
+		width: 2.25rem;
+		height: 2.25rem;
+		line-height: 2.25rem;
+		font-size: 1.125rem;
+	}
+	.next.right {
+		right: -2rem;
+	}
+
+	.next.left {
+		left: -2rem;
+	}
+
+	.movie-card {
+        width: 25%;
+    }
+    .site-footer {
+        background: var(--main-background);
+        padding: 30px 10vw 30px;
+    }
+}
