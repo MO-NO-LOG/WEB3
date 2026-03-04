@@ -1,4 +1,4 @@
-﻿/* 기본 스타일 */
+/* 공통 스타일 */
 * {
     margin: 0;
     padding: 0;
@@ -26,7 +26,7 @@ a {
 /*---------------------------------------*/
 
 .navbar a {
-    font-size: 1.125rem;
+    font-size: 18px;
 }
 
 .navbar {
@@ -41,7 +41,7 @@ a {
     padding: 16px 40px;
 
     background-color: rgba(10, 15, 30, 0.9);
-    font-size: 1.125rem;
+    font-size: 18px;
 }
 
 .logo {
@@ -94,19 +94,19 @@ a {
 .user-menu a {
     padding: 6px 14px;
     border-radius: 8px;
-    font-size: 0.875rem;
+    font-size: 14px;
     text-decoration: none;
     color: #fff;
 }
 
 .user-menu a:first-child {
     border: 1px solid rgba(255, 255, 255, 0.35);
-    font-size: 1rem;
+    font-size: 16px;
 }
 .user-menu a:last-child {
     background: var(--main-blue);
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 16px;
 }
 .user-menu a.userBtn {
     display: flex;
@@ -135,48 +135,48 @@ a {
 }
 
 .userBtn .nickname {
-    font-size: 1rem;
+    font-size: 16px;
     white-space: nowrap;
 }
 
+ul{
+    
+}
 
 /* =====================
-   헤더 반응형
+    헤더 반응형 처리
 ===================== */
 
 @media (max-width: 768px) {
 
-    /* 1) 모바일에서 중앙 메뉴 숨김 */
+    /* 1. 중앙 메뉴 전체 숨기기 (영화, 애니메이션, 리뷰) */
     .menu {
         display: none;
     }
 
-    /* 2) 모바일에서 회원가입 버튼 숨김 */
+    /* 2. 회원가입 버튼 숨기기 */
     .user-menu a:last-child {
         display: none;
-    }
-    .user-menu>a:last-child.userBtn{
-        display: block;
     }
 
     .user-menu a {
         background: var(--main-blue);
         font-weight: 500;
-        font-size: 1rem;
+        font-size: 16px;
     }
 
-    /* 3) 네비게이션 정렬 조정 */
+    /* 3. 네비게이션 바 정렬 조정 */
     .navbar {
         padding: 16px 20px;
-        /* 좌우 패딩 축소 */
+        /* 좌우 여백을 줄여 공간 확보 */
         justify-content: space-between;
-        /* 로고는 왼쪽, 사용자 메뉴는 오른쪽 유지 */
+        /* 로고는 왼쪽, 로그인은 오른쪽 끝 배치 */
     }
 
     .user-menu a:first-child {
-        font-size: 0.9375rem;
-        /* 작은 화면에서 글자 크기 소폭 축소 */
+        font-size: 15px;
+        /* 화면이 작으니 글자 크기 살짝 축소 */
         padding: 8px 10px;
-        /* 버튼 형태 가독성 유지 */
+        /* 버튼 형태보다 텍스트 위주로 보이게 조정 */
     }
 }

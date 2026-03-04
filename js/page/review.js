@@ -1,43 +1,42 @@
+
 // @ts-nocheck
-const API = "http://127.0.0.1:8000";
-const ACCESS_TOKEN_KEY = "access_token";
+const API = "http://127.0.0.1:8000"
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
 fetch(API + `/api/movies/detail/${urlParams.get('movieId')}`)
     .then(res => res.json())
     .then(movies => {
+        console.log("trend movies:", movies)
+
         const meta = document.querySelector(".detail-top .meta");
-        if (!meta) return;
-
         movies.genres.forEach(genresArr => {
-            meta.innerHTML += `<span>${genresArr}</span>`;
+            meta.innerHTML += `<span>${genresArr}</span>`
         });
-
-        meta.innerHTML += `<span>${String(movies.releaseDate || "").substring(0, 4)}</span>`;
+        meta.innerHTML += `<span>${src = movies.releaseDate.substring(0, 4)}</span>`
         document.querySelector(".detail-top .poster img").src = movies.posterUrl;
         document.querySelector(".detail-top .title").textContent = movies.title;
         document.querySelector(".detail-top .score strong").textContent = movies.averageRating;
         document.querySelector(".detail-top .summary p").textContent = movies.description;
-    });
+    })
 
 
 // ======================
 // 유틸
 // ======================
 function getMovieId() {
-    return new URLSearchParams(location.search).get("movieId");
+  return new URLSearchParams(location.search).get("movieId");
 }
 
 function starText(rating) {
-    return "★".repeat(Math.round(rating)) + "☆".repeat(5 - Math.round(rating));
+  return "★".repeat(Math.round(rating)) + "☆".repeat(5 - Math.round(rating));
 }
 
 // ======================
 // 리뷰 HTML 생성
 // ======================
 function makeReviewHTML(review) {
-    return `
+  return `
     <article class="review">
       <div class="review-top">
         <img src="${review.userImg || "https://i.pravatar.cc/100"}">
@@ -64,85 +63,74 @@ function makeReviewHTML(review) {
     </article>
   `;
 }
-
 // ======================
 // 리뷰 불러오기
 // ======================
 async function loadReviews() {
-    const movieId = getMovieId();
-    if (!movieId) return;
+  const movieId = getMovieId();
+  if (!movieId) return;
 
-    // 기존 코드: POST /api/reviews/by-movie (body movieId)
-    // 백엔드 스펙에 맞게 GET /api/reviews/by-movie/{movieId}로만 수정
-    const res = await fetch(`${API}/api/reviews/by-movie/${movieId}`);
-    if (!res.ok) return;
+  const res = await fetch(`${API}/api/reviews/by-movie`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ movieId }),
+  });
 
-    const data = await res.json();
-    const container = document.querySelector(".review-list");
-    if (!container) return;
+  const data = await res.json();
+  const container = document.querySelector(".review-list");
 
-    // 기존 리뷰 제거
-    container.querySelectorAll(".review").forEach(r => r.remove());
+  // 기존 리뷰 제거
+  container.querySelectorAll(".review").forEach(r => r.remove());
 
-    data.reviews.forEach(r => {
-        container.insertAdjacentHTML("beforeend", makeReviewHTML(r));
-    });
+  data.reviews.forEach(r => {
+    container.insertAdjacentHTML("beforeend", makeReviewHTML(r));
+  });
 }
 
 // ======================
 // 리뷰 작성
 // ======================
 async function submitReview() {
-    const movieId = getMovieId();
-    const content = document.querySelector("#review-form textarea").value;
-    const rating = document.querySelector('input[name="rating"]:checked')?.value;
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+  const movieId = getMovieId();
+  const content = document.querySelector("#review-form textarea").value;
+  const rating = document.querySelector('input[name="rating"]:checked')?.value;
 
-    if (!token) {
-        alert("로그인 후 이용해주세요.");
-        location.href = "login.html";
-        return;
-    }
+  if (!rating || !content.trim()) {
+    alert("별점과 내용을 입력하세요.");
+    return;
+  }
 
-    if (!rating || !content.trim()) {
-        alert("별점과 내용을 입력해주세요.");
-        return;
-    }
+  const res = await fetch(`${API}/api/reviews/create`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({
+      movieId,
+      rating: Number(rating),
+      content,
+    }),
+  });
 
-    const res = await fetch(`${API}/api/reviews/create`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-        body: JSON.stringify({
-            movieId: Number(movieId),
-            rating: Number(rating),
-            content,
-        }),
-    });
+  if (!res.ok) {
+    const err = await res.json();
+    alert(err.detail || "리뷰 작성 실패");
+    return;
+  }
 
-    if (!res.ok) {
-        const err = await res.json();
-        alert(err.detail || "리뷰 작성 실패");
-        return;
-    }
+  // 폼 초기화
+  document.querySelector("#review-form textarea").value = "";
+  document.querySelectorAll('input[name="rating"]').forEach(r => r.checked = false);
+  document.getElementById("review-form").classList.remove("show");
 
-    // 입력 초기화
-    document.querySelector("#review-form textarea").value = "";
-    document.querySelectorAll('input[name="rating"]').forEach(r => r.checked = false);
-    document.getElementById("review-form").classList.remove("show");
-
-    loadReviews();
+  loadReviews();
 }
 
 // ======================
 // 이벤트 바인딩
 // ======================
 document.addEventListener("DOMContentLoaded", () => {
-    loadReviews();
+  loadReviews();
 
-    const submitBtn = document.querySelector("#review-form button:last-child");
-    if (submitBtn) submitBtn.addEventListener("click", submitReview);
+  const submitBtn = document.querySelector("#review-form button:last-child");
+  submitBtn.addEventListener("click", submitReview);
 });

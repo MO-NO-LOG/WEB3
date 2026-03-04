@@ -32,24 +32,24 @@ a {
 
 .profile-title {
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 20px;
     margin-left: 20px;
 }
 
 .profile-sub {
     font-weight: 400;
-    font-size: 0.875rem;
+    font-size: 14px;
     color: #898989;
     margin-left: 20px;
 }
 
 
-/* CONTENT (?�심) */
+/* CONTENT (핵심) */
 
 .content {
     width: 100%;
     max-width: 750px;
-    /* ⬅️ 가로폭 줄임 (?�진 ?�낌) */
+    /* ⬅️ 가로폭 줄임 (사진 느낌) */
     background: #fdfefe;
     border-radius: 28px;
     padding: 40px 48px 36px;
@@ -63,13 +63,13 @@ a {
 
 h1 {
     margin: -5px 0 0;
-    font-size: 1.625rem;
+    font-size: 26px;
     color: #111827;
 }
 
 .desc {
     margin: 4px 0 28px;
-    font-size: 0.875rem;
+    font-size: 14px;
     color: #6b7280bd;
 }
 
@@ -100,14 +100,14 @@ h1 {
 
 .field-guide {
     display: block;
-    font-size: 0.8125rem;
+    font-size: 13px;
     font-weight: 500;
     color: #4F7CFF;
     margin-bottom: -8px;
 }
 
 .field label {
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 600;
     color: #000000;
     margin-top: 15px;
@@ -127,7 +127,7 @@ h1 {
     border-radius: 30px;
     border: 1px solid #929292;
     background: #f9fafb;
-    font-size: 0.875rem;
+    font-size: 14px;
     color: #636363a3;
 }
 
@@ -137,7 +137,7 @@ h1 {
     border-radius: 30px;
     border: 1px solid #d1d5db;
     background: #fff;
-    font-size: 0.875rem;
+    font-size: 14px;
 }
 
 
@@ -154,7 +154,7 @@ h1 {
     height: 44px;
     padding: 0 22px;
     border-radius: 12px;
-    font-size: 0.875rem;
+    font-size: 14px;
 }
 
 .cancel {
@@ -209,7 +209,7 @@ h1 {
 }
 
 .modal-header span {
-    font-size: 1.125rem;
+    font-size: 18px;
     font-weight: 700;
     color: #111;
 }
@@ -217,7 +217,7 @@ h1 {
 .close {
     border: none;
     background: none;
-    font-size: 1.125rem;
+    font-size: 18px;
     color: #9ca3af;
     cursor: pointer;
 }
@@ -233,7 +233,7 @@ h1 {
     border: none;
     background: #4f7cff;
     color: #fff;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
 }
@@ -242,7 +242,7 @@ h1 {
 /* GUIDE TEXT (공통) */
 
 .modal-box .guide {
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 400;
     color: #000000;
     margin: 14px 10px 10px;
@@ -267,18 +267,18 @@ h1 {
     border-radius: 999px;
     border: 1px solid #d1d5db;
     padding: 0 16px;
-    font-size: 0.875rem;
+    font-size: 14px;
 }
 
 .modal-box.nickname .guide:last-of-type,
 .modal-box.id .guide:last-of-type {
-    font-size: 0.7188rem;
+    font-size: 11.5px;
     color: #a1a1aa;
     margin-top: 6px;
 }
 
 
-/* EMAIL (?�진 그�?�? */
+/* EMAIL (사진 그대로) */
 
 .modal-box.email {
     width: 400px;
@@ -289,7 +289,7 @@ h1 {
 }
 
 .modal-box.email label {
-    font-size: 0.8125rem;
+    font-size: 13px;
     font-weight: 600;
     color: #111;
     margin: 14px 0 6px;
@@ -300,7 +300,7 @@ h1 {
     width: 300px;
 }
 
-/* ?? ?�메??+ 코드?�송 */
+/* 위: 이메일 + 코드전송 */
 .modal-box.email2 .send-code {
     display: flex;
     gap: 10px;
@@ -312,31 +312,31 @@ h1 {
     border-radius: 999px;
     border: 1px solid #d1d5db;
     padding: 0 16px;
-    font-size: 0.875rem;
+    font-size: 14px;
 }
 
-/* 코드 ?�송 버튼 */
+/* 코드 전송 버튼 */
 .modal-box.email .send-code {
     width: 88px;
     height: 44px;
     border-radius: 999px;
     border: 1px solid #d1d5db;
     background: #fff;
-    font-size: 0.8125rem;
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     color: #a1a1aa;
     margin-left: 1.5px;
 }
 
-/* ?�래: ?�증 코드 (길게) */
+/* 아래: 인증 코드 (길게) */
 .modal-box.email>#modal-body>input {
     width: 250px;
     height: 44px;
     border-radius: 999px;
     border: 1px solid #d1d5db;
     padding: 0 16px;
-    font-size: 0.875rem;
+    font-size: 14px;
     margin-top: 4px;
 }
 
@@ -353,7 +353,7 @@ h1 {
     border-radius: 999px;
     border: 1px solid #d1d5db;
     padding: 0 16px;
-    font-size: 0.875rem;
+    font-size: 14px;
 }
 
 /* TOAST */
@@ -369,7 +369,7 @@ h1 {
     color: #fff;
     padding: 12px 24px;
     border-radius: 30px;
-    font-size: 0.875rem;
+    font-size: 14px;
     z-index: 10000;
 }
 
