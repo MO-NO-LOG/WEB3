@@ -1,44 +1,61 @@
-// 1️⃣ 헤더 HTML 먼저 즉시 삽입
+﻿const HEADER_ACCESS_TOKEN_KEY = "access_token";
+const API = "http://127.0.0.1:8000";
+
 fetch("../header.html")
-    .then(res => res.text())
-    .then(html => {
-        const header = document.querySelector("header");
-        if (!header) return;
+  .then((res) => res.text())
+  .then((html) => {
+    const header = document.querySelector("header");
+    if (!header) return;
 
-        header.innerHTML = html;
+    header.innerHTML = html;
 
-        const userMenu = header.querySelector(".user-menu");
+    const userMenu = header.querySelector(".user-menu");
+    if (!userMenu) return;
 
-        // 기본 상태 (비로그인)
+    userMenu.innerHTML = `
+      <a href="login.html">로그인</a>
+      <a href="join.html">회원가입</a>
+    `;
+
+    const token = localStorage.getItem(HEADER_ACCESS_TOKEN_KEY);
+    if (!token) return;
+
+    fetch(`${API}/api/auth/me`, {
+      credentials: "include",
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (res.status === 401) {
+          localStorage.removeItem(HEADER_ACCESS_TOKEN_KEY);
+          return null;
+        }
+        if (!res.ok) return null;
+        return res.json();
+      })
+      .then((user) => {
+        if (!user) return;
+
         userMenu.innerHTML = `
-            <a href="login.html">로그인</a>
-            <a href="join.html">회원가입</a>
-        `;
-
-        // 2️⃣ 로그인 상태 비동기 확인
-        fetch("http://127.0.0.1:8000/api/auth/me", {
-            credentials: "include"
-        })
-        .then(res => res.status === 401 ? null : res.json())
-        .then(user => {
-            if (!user) return;
-
-            userMenu.innerHTML = `
-                <a href="mypage.html" class="userBtn">
-                    <img src="${user.img ?? '/images/ui/default-user.png'}" loading="lazy">
-                    ${user.nickname}
-
-                    <ul>
-                        <li><a href="mypage.html">
-                            <img src="images/ui/user-1.png" alt="mypage">
-                            <span>마이페이지</span>
-                        </a></li>
-                        <li>
-                            <img src="images/ui/exit.png" alt="logout">
-                            <span>로그아웃</span>
-                        </li>
-                    </ul>
+          <a href="mypage.html" class="userBtn">
+            <img src="${user.img ?? "/images/default-user.png"}" alt="user">
+            ${user.nickname}
+            <ul>
+              <li>
+                <a href="mypage.html">
+                  <img src="images/ui/user-1.png" alt="mypage">
+                  <span>마이페이지</span>
                 </a>
-            `;
-        });
-    });
+              </li>
+              <li>
+                <a href="login.html">
+                  <img src="images/ui/exit.png" alt="logout">
+                  <span>로그아웃</span>
+                </a>
+              </li>
+            </ul>
+          </a>
+        `;
+      })
+      .catch((err) => console.error("header user fetch failed:", err));
+  })
+  .catch((err) => console.error("header load failed:", err));

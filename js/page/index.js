@@ -1,6 +1,6 @@
-const API = "http://127.0.0.1:8000";
+﻿const API = "http://127.0.0.1:8000";
 
-/* 🔧 공통 카드 생성 (rank-card 대응 + clip 구조) */
+/* 공통 카드 생성 (rank-card + clip 구조) */
 function renderMovieCard(movie, rank = null) {
   return `
     <article class="movie-card ${rank ? "rank-card" : ""}">
@@ -13,7 +13,7 @@ function renderMovieCard(movie, rank = null) {
             <h4>${movie.title}</h4>
             <div class="text-box">
               <p>${movie.releaseDate || ""}</p>
-              <span class="rating">★ ${movie.averageRating ?? 0}</span>
+              <span class="rating">★${movie.averageRating ?? 0}</span>
             </div>
           </div>
         </div>
@@ -22,7 +22,7 @@ function renderMovieCard(movie, rank = null) {
   `;
 }
 
-/* 🔥 트렌드 */
+/* 트렌드 */
 fetch(API + "/api/movies/trend")
   .then(res => res.json())
   .then(movies => {
@@ -30,8 +30,7 @@ fetch(API + "/api/movies/trend")
       movies.map(m => renderMovieCard(m)).join("");
   });
 
-/* 🎬 TOP 7 */
-/* 🎬 TOP 7 (별점 높은 순) */
+/* 기존 코드: recommended API를 3번 호출
 fetch(API + "/api/movies/recommended")
   .then(res => res.json())
   .then(movies => {
@@ -42,7 +41,6 @@ fetch(API + "/api/movies/recommended")
       top7.map((m, i) => renderMovieCard(m, i + 1)).join("");
   });
 
-/* ⭐ 평점순 */
 fetch(API + "/api/movies/recommended")
   .then(res => res.json())
   .then(movies => {
@@ -50,12 +48,26 @@ fetch(API + "/api/movies/recommended")
       movies.map(m => renderMovieCard(m)).join("");
   });
 
-/* ⏰ 종료 예정 */
 fetch(API + "/api/movies/recommended")
   .then(res => res.json())
   .then(movies => {
     document.getElementById("endingList").innerHTML =
       movies.map(m => renderMovieCard(m)).join("");
   });
-//=============================================================================================
-//=============================================================================================
+*/
+
+/* recommended 1회 호출 후 재사용 */
+fetch(API + "/api/movies/recommended?limit=10")
+  .then(res => res.json())
+  .then(movies => {
+    const sorted = [...movies].sort((a, b) => (b.averageRating ?? 0) - (a.averageRating ?? 0));
+
+    document.getElementById("top7List").innerHTML =
+      sorted.slice(0, 7).map((m, i) => renderMovieCard(m, i + 1)).join("");
+
+    document.getElementById("ratingList").innerHTML =
+      sorted.map(m => renderMovieCard(m)).join("");
+
+    document.getElementById("endingList").innerHTML =
+      movies.map(m => renderMovieCard(m)).join("");
+  });

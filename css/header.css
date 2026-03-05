@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Pretendard';
+    list-style: none;
 }
 
 a {
@@ -33,6 +34,7 @@ a {
     position: fixed;
     top: 0;
     width: 100%;
+    height: 60px;
     z-index: 1000;
 
     display: flex;
@@ -113,8 +115,8 @@ a {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    
-    padding: 6px 12px;
+
+    padding: 0;
     border-radius: 8px;
     background: none;
     border: none;
@@ -130,8 +132,6 @@ a {
     object-fit: cover;
     padding: 2px;
     border: 0.5px solid #aaa;
-    position: relative;
-    top: -5px;
 }
 
 .userBtn .nickname {
@@ -139,8 +139,30 @@ a {
     white-space: nowrap;
 }
 
-ul{
-    
+.user-menu:hover ul a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 5px 13px;
+    border-radius: 8px;
+    background: none;
+    border: none;
+} 
+.user-menu:hover ul{
+    display: block;
+}
+.user-menu ul img{
+    width: 40px;
+    height: 40px;
+    filter:invert(100);
+}
+.user-menu ul{
+    position: fixed;
+    background: rgba(10, 15, 30, 0.9);
+    top: 50px;
+    display: none;
 }
 
 /* =====================

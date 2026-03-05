@@ -255,7 +255,7 @@ a {
     width: 25px;
     height: 25px;
 
-    background-image: url("../images/ui/빈 하트.png"); /* 기존 하트 */
+    background-image: url("../images/ui/heart_stroke.png"); /* 기존 하트 */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -268,5 +268,5 @@ a {
 }
 
 .wish-btn.on .wish-icon {
-    background-image: url("../images/ui/하트.png");
+    background-image: url("../images/ui/heart_stroke.png");
 }
