@@ -1,5 +1,5 @@
 ﻿const HEADER_ACCESS_TOKEN_KEY = "access_token";
-const API = "http://127.0.0.1:8000";
+const HEADER_API = "http://127.0.0.1:8000";
 
 fetch("../header.html")
   .then((res) => res.text())
@@ -20,7 +20,7 @@ fetch("../header.html")
     const token = localStorage.getItem(HEADER_ACCESS_TOKEN_KEY);
     if (!token) return;
 
-    fetch(`${API}/api/auth/me`, {
+    fetch(`${HEADER_API}/api/auth/me`, {
       credentials: "include",
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -36,7 +36,6 @@ fetch("../header.html")
         if (!user) return;
 
         userMenu.innerHTML = `
-          <a href="mypage.html" class="userBtn">
             <img src="${user.img ?? "/images/default-user.png"}" alt="user">
             ${user.nickname}
             <ul>
@@ -53,8 +52,8 @@ fetch("../header.html")
                 </a>
               </li>
             </ul>
-          </a>
         `;
+        userMenu.classList.add("login");
       })
       .catch((err) => console.error("header user fetch failed:", err));
   })

@@ -110,22 +110,28 @@ a {
     font-weight: 500;
     font-size: 16px;
 }
-.user-menu a.userBtn {
+.user-menu.login {
+    height: 50px;
     display: flex;
+    padding: 10px 0;
     align-items: center;
     justify-content: center;
     gap: 10px;
-
+    color: #fff;
+    
     padding: 0;
     border-radius: 8px;
     background: none;
     border: none;
 }
-.user-menu a.userBtn:hover {
+.user-menu.login li{
+    justify-self: start;
+}
+.user-menu.login li:hover {
     opacity: 100%;
 }
 
-.userBtn img {
+.user-menu.login img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -133,8 +139,29 @@ a {
     padding: 2px;
     border: 0.5px solid #aaa;
 }
+.user-menu.login ul{
+    border-radius: 10px;
+    padding: 10px;
+}
+.user-menu.login ul li:first-child::after {
+    content: "";
+    display: block; 
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    margin: 6px 0;
+}
+.user-menu.login ul li {
+    text-align: left;
+}
+.user-menu.login ul img {
+    width: 25px;
+    height: 25px;
+    border-radius: 0;
+    border: none;
+}
 
-.userBtn .nickname {
+.user-menu.login .nickname {
     font-size: 16px;
     white-space: nowrap;
 }
@@ -161,8 +188,10 @@ a {
 .user-menu ul{
     position: fixed;
     background: rgba(10, 15, 30, 0.9);
-    top: 50px;
+    top: 55px;
+    right: 10px;
     display: none;
+    border: 1px solid #fff;
 }
 
 /* =====================
