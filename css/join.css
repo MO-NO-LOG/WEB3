@@ -1,4 +1,4 @@
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,15 +18,12 @@ body {
     background-color: gray;
 }
 
-/* 공통 스타일 */
 .content {
     display: flex;
     flex-direction: column;
     z-index: 10;
 }
 
-/* PC 화면 
-   화면 너비가 769px 이상일 때 적용.*/
 @media screen and (min-width: 769px) {
     .content {
         position: absolute;
@@ -34,7 +31,6 @@ body {
         left: 50%;
         transform: translate(-50%, -50%);
         width: 600px;
-        /* PC는 600px로 널찍하게 */
         background: #0000007a;
         border: 2px solid rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(13px);
@@ -45,21 +41,15 @@ body {
     }
 }
 
-/* 모바일 화면 
-   화면 너비가 768px 이하일 때 적용.*/
 @media screen and (max-width: 768px) {
     .content {
-        /* 모바일에서는 화면 중앙에 고정하는 대신 적절한 여백을 줌 */
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -60%);
         margin: 50px auto;
-        /* 상하 여백 50px, 좌우 자동 중앙 */
         width: 90%;
-        /* 화면의 90% 차지 */
         max-width: 400px;
-        /* 아무리 커져도 400px 제한 */
         padding: 40px 20px;
         background: #0000007a;
         backdrop-filter: blur(10px);
@@ -67,6 +57,33 @@ body {
         border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, 0.2);
     }
+}
+form{
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.45) rgba(255, 255, 255, 0.08);
+    padding-right: 10px;
+}
+
+form::-webkit-scrollbar {
+    width: 10px;
+}
+
+form::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+}
+
+form::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.35));
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+form::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.5));
 }
 
 .content h2 {
@@ -85,47 +102,25 @@ body {
 .content .input-box input {
     background: transparent;
     width: 100%;
-    height: 100%;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 30px;
-    padding: 20px 45px 20px 20px;
+    padding: 15px 20px;
     font-size: 16px;
+    color: #fff;
 }
-
+.line-box{
+    display: flex;
+    gap: 10px;
+}
 input::placeholder {
     color: #fff;
     font-size: 16px;
-}
-
-.input-box i {
-    position: absolute;
-    top: 50%;
-    right: 18px;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #fff;
 }
 
 span {
     margin-left: 10px;
     margin-bottom: 3px;
     display: block;
-}
-
-.content .remember {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: -16px 0 16px;
-}
-
-.remember label input {
-    accent-color: #fff;
-    margin-right: 4px;
-}
-
-.remember a {
-    color: #fff;
 }
 
 .btnn {
@@ -141,58 +136,6 @@ span {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     margin: 16px 0;
-}
-
-.button {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    text-align: center;
-}
-
-.button a {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-
-.button a i {
-    font-size: 20px;
-    margin-right: 8px;
-}
-
-.button a:hover {
-    opacity: 0.8;
-}
-
-
-input[type="checkbox"] {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-}
-
-
-input::-ms-reveal,
-input::-ms-clear {
-    display: none;
-}
-
-input::-webkit-credentials-auto-fill-button,
-input::-webkit-clear-button,
-input::-webkit-inner-spin-button,
-input::-webkit-contacts-auto-fill-button {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none;
-    height: 0;
-    width: 0;
-    margin: 0;
-    padding: 0;
 }
 
 .gender-box {
@@ -222,4 +165,72 @@ input::-webkit-contacts-auto-fill-button {
     background: #fff;
     color: #0a2862;
     font-weight: 600;
+}
+
+.content .input-box.birth-box {
+    height: auto !important;
+    margin-bottom: 10px;
+}
+
+.content .input-box.verify-code-box {
+    margin-top: 16px;
+    margin-bottom: 10px;    
+}
+
+.verify-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 10px;
+}
+
+.verify-btn {
+    width: 17%;
+    min-width: 85px;
+    height: 55px;
+    border-radius: 27px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+.content .input-box .line-box input {
+    width: 83%;
+}
+.verify-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.verify-status {
+    margin: 0;
+    color: #ffd36b;
+    font-size: 14px;
+}
+
+.birth-select-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.birth-select-row select {
+    height: 55px;
+    width: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-size: 15px;
+    padding: 0 14px;
+    appearance: none;
+}
+
+.birth-select-row select:focus {
+    border-color: rgba(79, 124, 255, 0.9);
+}
+
+.birth-select-row option {
+    color: #111;
 }

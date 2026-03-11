@@ -34,9 +34,13 @@ fetch("../header.html")
       })
       .then((user) => {
         if (!user) return;
+        const profileImg =
+          user.img && String(user.img).trim()
+            ? user.img
+            : "/images/default-user.png";
 
         userMenu.innerHTML = `
-            <img src="${user.img ?? "/images/default-user.png"}" alt="user">
+            <img src="${profileImg}" alt="user">
             ${user.nickname}
             <ul>
               <li>
