@@ -79,7 +79,7 @@ fetch(API + "/api/movies/trend")
   });
 
 /* recommended 1회 호출 후 재사용 */
-fetch(API + "/api/movies/recommended?limit=10")
+fetch(API + "/api/movies/recommended?limit=30")
   .then((res) => res.json())
   .then((movies) => {
     const sorted = [...movies].sort((a, b) => (b.averageRating ?? 0) - (a.averageRating ?? 0));

@@ -406,6 +406,208 @@ a {
     max-width: 900px;
 }
 
+.reply-tools {
+    margin-top: 10px;
+}
+
+.reply-toggle {
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.reply-box {
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    background: #fafafa;
+}
+
+.reply-list {
+    margin: 0;
+    padding: 0;
+}
+
+.reply-item {
+    list-style: none;
+    border-bottom: 1px solid #ececec;
+    padding: 8px 0;
+}
+
+.reply-item:last-child {
+    border-bottom: none;
+}
+
+.reply-item strong {
+    font-size: 13px;
+}
+
+.reply-item p {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #444;
+    max-width: none;
+}
+
+.reply-empty {
+    list-style: none;
+    font-size: 13px;
+    color: #777;
+}
+
+.reply-write {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.reply-input {
+    flex: 1;
+    height: 36px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 13px;
+}
+
+.reply-submit {
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    padding: 0 12px;
+    background: #4f7cff;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* ================= 답글 (원본 구조 대응) ================= */
+.comment-btn {
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #555;
+}
+
+.reply-arrow {
+    width: 14px;
+    transition: transform 0.2s ease;
+}
+
+.comment-btn.open .reply-arrow {
+    transform: rotate(180deg);
+}
+
+.replies {
+    display: none;
+    margin-top: 12px;
+    padding: 14px;
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    background: #fafafa;
+}
+
+.reply-form {
+    display: grid;
+    grid-template-columns: 36px 1fr auto auto;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.reply-profile {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reply-form input {
+    height: 36px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 13px;
+}
+
+.reply-form button {
+    height: 36px;
+    border-radius: 8px;
+    padding: 0 12px;
+    cursor: pointer;
+}
+
+.reply-form .cancel-btn {
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #444;
+}
+
+.reply-form .reply-submit-btn {
+    border: none;
+    background: #4f7cff;
+    color: #fff;
+}
+
+.replies-list .reply {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 10px;
+    align-items: start;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+}
+
+.replies-list .reply:first-child {
+    border-top: none;
+}
+
+.reply-content {
+    min-width: 0;
+}
+
+.reply-user {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.reply-body {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.reply-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.reply-actions .action {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.reply-actions img {
+    width: 14px;
+    height: 14px;
+}
+
+.reply-actions span {
+    font-size: 12px;
+    color: #777;
+}
+
 /* ================= 추천 영화 ================= */
 .movie-card {
     position: relative;
