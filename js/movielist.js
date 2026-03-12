@@ -107,16 +107,7 @@ async function loadMovies() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
-    const rawMovies = Array.isArray(data.movies) ? data.movies : [];
-
-    // 동일 제목 중복 영화가 많은 DB 상태를 보정: 제목 기준으로 1개만 노출
-    const titleSeen = new Set();
-    currentMovies = rawMovies.filter((m) => {
-      const key = String(m.title || "").trim().toLowerCase();
-      if (!key || titleSeen.has(key)) return false;
-      titleSeen.add(key);
-      return true;
-    });
+    currentMovies = Array.isArray(data.movies) ? data.movies : [];
     totalPages = Math.max(data.totalPages ?? 1, 1);
 
     const pageTitle = document.querySelector('.page-title');
