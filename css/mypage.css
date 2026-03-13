@@ -201,7 +201,9 @@ a {
     color: #b4b4b4;
     margin-top: -2px;
 }
-
+.review-item p{
+    font-weight: 700;
+}
 /* =====================
    위시리스트
 ===================== */

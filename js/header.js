@@ -1,6 +1,13 @@
 ﻿const HEADER_ACCESS_TOKEN_KEY = "access_token";
 const HEADER_API = "http://127.0.0.1:8000";
 
+if (!document.querySelector('script[data-logout-js="1"]')) {
+  const logoutScript = document.createElement("script");
+  logoutScript.src = "js/logout.js";
+  logoutScript.dataset.logoutJs = "1";
+  document.head.appendChild(logoutScript);
+}
+
 fetch("../header.html")
   .then((res) => res.text())
   .then((html) => {
@@ -50,7 +57,7 @@ fetch("../header.html")
                 </a>
               </li>
               <li>
-                <a href="login.html">
+                <a href="#" class="js-logout">
                   <img src="images/ui/exit.png" alt="logout">
                   <span>로그아웃</span>
                 </a>
