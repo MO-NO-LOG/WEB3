@@ -1,5 +1,6 @@
 ﻿const API = "http://127.0.0.1:8000";
 const ACCESS_TOKEN_KEY = "access_token";
+let csrfTokenCache = null;
 
 function getMovieId() {
   return new URLSearchParams(location.search).get("movieId");
@@ -14,9 +15,41 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function starText(rating) {
-  const n = Math.max(1, Math.min(5, Math.round(Number(rating) || 0)));
-  return "★".repeat(n) + "☆".repeat(5 - n);
+function starRatingHTML(rating) {
+  const value = Math.max(0.5, Math.min(5, Math.round((Number(rating) || 0) * 2) / 2));
+  const fullCount = Math.floor(value);
+  const hasHalf = value % 1 !== 0;
+  const emptyCount = 5 - fullCount - (hasHalf ? 1 : 0);
+
+  return `
+    <span class="star-rating-display" aria-label="${value}점">
+      ${'<span class="star-icon full"></span>'.repeat(fullCount)}
+      ${hasHalf ? '<span class="star-icon half"></span>' : ""}
+      ${'<span class="star-icon empty"></span>'.repeat(emptyCount)}
+    </span>
+  `;
+}
+
+async function getCsrfToken() {
+  if (csrfTokenCache) return csrfTokenCache;
+
+  const res = await fetch(`${API}/api/auth/csrf`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`CSRF ${res.status}`);
+
+  const data = await res.json();
+  csrfTokenCache = data.csrfToken || null;
+  return csrfTokenCache;
+}
+
+async function readErrorMessage(res, fallback) {
+  try {
+    const err = await res.json();
+    if (typeof err.detail === "string") return err.detail;
+    if (typeof err.message === "string") return err.message;
+  } catch {}
+  return fallback;
 }
 
 function actionIcons() {
@@ -48,7 +81,7 @@ function makeReviewHTML(review) {
       <div class="review-top">
         <img src="images/default-user.png" alt="User">
         <span class="user">${escapeHtml(review.userNickname || "익명")}</span>
-        <span class="star">${starText(review.rating)}</span>
+        <span class="star">${starRatingHTML(review.rating)}</span>
       </div>
       <p>${escapeHtml(review.content || "")}</p>
 
@@ -74,6 +107,44 @@ function makeReviewHTML(review) {
       </div>
     </article>
   `;
+}
+
+function resetReviewForm() {
+  const textarea = document.querySelector("#review-form textarea");
+  if (textarea) textarea.value = "";
+  document.querySelectorAll('input[name="rating"]').forEach((input) => {
+    input.checked = false;
+  });
+}
+
+async function fillReviewProfile() {
+  const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+  const profileImg = document.querySelector(".review-input-wrap .profile");
+  const writeBtn = document.querySelector(".reviews-header .write");
+  if (!profileImg || !writeBtn) return;
+
+  if (!token) {
+    profileImg.src = "images/default-user.png";
+    writeBtn.textContent = "리뷰 작성";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API}/api/auth/me`, {
+      credentials: "include",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return;
+
+    const user = await res.json();
+    profileImg.src =
+      user.img && String(user.img).trim()
+        ? user.img
+        : "images/default-user.png";
+    writeBtn.textContent = `${user.nickname}님의 리뷰 작성`;
+  } catch (err) {
+    console.error("review profile load failed:", err);
+  }
 }
 
 async function loadMovieDetail() {
@@ -163,22 +234,21 @@ async function submitComment(reviewEl) {
     return;
   }
 
+  const csrfToken = await getCsrfToken();
+
   const res = await fetch(`${API}/api/reviews/comment/create`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+      "X-CSRF-Token": csrfToken,
     },
     body: JSON.stringify({ reviewId: Number(reviewId), content }),
   });
 
   if (!res.ok) {
-    let msg = "답글 작성 실패";
-    try {
-      const err = await res.json();
-      if (typeof err.detail === "string") msg = err.detail;
-    } catch {}
-    alert(msg);
+    alert(await readErrorMessage(res, "답글 작성 실패"));
     return;
   }
 
@@ -223,11 +293,15 @@ async function submitReview() {
     return;
   }
 
+  const csrfToken = await getCsrfToken();
+
   const res = await fetch(`${API}/api/reviews/create`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+      "X-CSRF-Token": csrfToken,
     },
     body: JSON.stringify({
       movieId: Number(movieId),
@@ -237,24 +311,31 @@ async function submitReview() {
   });
 
   if (!res.ok) {
-    let msg = "리뷰 작성 실패";
-    try {
-      const err = await res.json();
-      if (typeof err.detail === "string") msg = err.detail;
-    } catch {}
-    alert(msg);
+    alert(await readErrorMessage(res, "리뷰 작성 실패"));
     return;
   }
 
-  const textarea = document.querySelector("#review-form textarea");
-  if (textarea) textarea.value = "";
-  document.querySelectorAll('input[name="rating"]').forEach((r) => {
-    r.checked = false;
-  });
+  resetReviewForm();
   document.getElementById("review-form")?.classList.remove("show");
 
   await loadReviews();
+  await loadMovieDetail();
+  alert("리뷰가 등록되었습니다.");
 }
+
+window.toggleReviewForm = function toggleReviewForm() {
+  const form = document.getElementById("review-form");
+  const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+  if (!form) return;
+
+  if (!token) {
+    alert("로그인 후 리뷰 작성이 가능합니다.");
+    location.href = "login.html";
+    return;
+  }
+
+  form.classList.toggle("show");
+};
 
 window.toggleReplies = function toggleReplies(btn) {
   const review = btn.closest(".review");
@@ -298,10 +379,13 @@ document.addEventListener("click", function (e) {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
+  await fillReviewProfile();
   await loadMovieDetail();
   await loadReviews();
 
-  const submitBtn = document.querySelector("#review-form .form-actions button:last-child");
+  const submitBtn = document.querySelector(
+    "#review-form .form-actions button:last-child"
+  );
   if (submitBtn) {
     submitBtn.addEventListener("click", submitReview);
   }

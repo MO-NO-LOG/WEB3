@@ -239,15 +239,44 @@ a {
 }
 
 .rating-input label {
-    font-size: 26px;
-    color: #ddd;
+    position: relative;
+    width: 13px;
+    height: 26px;
     cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
 }
 
-.rating-input label:hover,
-.rating-input label:hover~label,
-.rating-input input:checked~label {
+.rating-input label::before,
+.rating-input label::after {
+    content: "★";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 26px;
+    font-size: 26px;
+    line-height: 1;
+}
+
+.rating-input label::before {
+    color: #ddd;
+}
+
+.rating-input label::after {
     color: #f5c542;
+    opacity: 0;
+}
+
+.rating-input label.full::before,
+.rating-input label.full::after {
+    left: -13px;
+}
+
+.rating-input label:hover::after,
+.rating-input label:hover~label::after,
+.rating-input input:checked+label::after,
+.rating-input input:checked+label~label::after {
+    opacity: 1;
 }
 
 /* 리뷰 입력 textarea */
@@ -990,6 +1019,95 @@ a {
 .reply-form button:last-child {
     background: #4F7CFF;
     color: #fff;
+}
+
+/* rating override: keep five visible stars and support half-star selection */
+#review-form .rating-input {
+    gap: 0 !important;
+}
+
+.rating-input {
+    gap: 0 !important;
+}
+
+.rating-input label {
+    position: relative;
+    width: 13px !important;
+    height: 26px !important;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.rating-input label::before,
+.rating-input label::after {
+    content: "\2605" !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 26px;
+    font-size: 26px;
+    line-height: 1;
+}
+
+.rating-input label::before {
+    color: #ddd !important;
+}
+
+.rating-input label::after {
+    color: #f5c542 !important;
+    opacity: 0;
+}
+
+.rating-input label.full::before,
+.rating-input label.full::after {
+    left: -13px;
+}
+
+.rating-input label:hover::after,
+.rating-input label:hover ~ label::after,
+.rating-input input:checked + label::after,
+.rating-input input:checked + label ~ label::after {
+    opacity: 1;
+}
+
+.star-rating-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+}
+
+.star-rating-display .star-icon {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+}
+
+.star-rating-display .star-icon::before,
+.star-rating-display .star-icon::after {
+    content: "\2605";
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.star-rating-display .star-icon::before {
+    color: #d9d9d9;
+}
+
+.star-rating-display .star-icon::after {
+    color: #f5c542;
+}
+
+.star-rating-display .star-icon.empty::after {
+    display: none;
+}
+
+.star-rating-display .star-icon.half::after {
+    width: 9px;
+    overflow: hidden;
 }
 
 .cancel-btn {
